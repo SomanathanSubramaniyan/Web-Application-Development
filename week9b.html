@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<title> Week 9 Scales </title>
+
+<style>
+
+rect:hover {fill:black;}
+.myClass {border: 2px solid	black;)
+
+</style>
+
+</head>
+
+<body>
+
+<div height="1000" width="1000" align="center" id="myDiv"> </div>
+
+</body>
+</html>
+<script>
+d3.csv("Temp.csv").then 
+	(function(data)
+		{
+			console.log(data);
+			
+	// Convert into Numbers
+			data.forEach(function(d) {
+				d.Sales = Number(d.Sales);
+				});
+			
+	// Create a Scale		
+			let myScale =  d3.scaleLinear()
+						.domain([0,d3.max(data, function(d) {
+										return d.Sales;
+												})
+												])
+						.range([300,0]);
+						
+	// Create a XScale		
+			let XScale = d3.scaleBand()
+						.domain(data.map(function (d) { return d.Month;}))
+						.range([0,600]);
+	// Create y Axis
+			var yaxis = d3.axisLeft()
+				.scale(myScale);
+				
+	// Create x Axis
+			var xaxis = d3.axisBottom()
+				.scale(XScale);
+		
+
+		
+			var svgContainer = d3.select("#myDiv").append("svg")
+					.attr("width",1000)
+					.attr("height",1000)
+					.attr("align","center")
+					.attr("class","myClass");
+							
+			var svgRectangle = svgContainer.selectAll("rect").data(data);
+				 svgRectangle.enter()
+					.append("rect")
+					.transition()
+					.duration(3000)
+					.delay(1000)
+					//.ease(d3.easeBounce)
+					//.ease(d3.easeCircleIn)
+					.ease(d3.easeElastic)
+					.attr("x",function(d,i) {return 50+(i*50);})
+					.attr("y",function(d){return (myScale(d.Sales));})
+					.attr("width",40)
+					.attr("height",function(d) {return 300-myScale(d.Sales);})
+					.attr("fill", function (d) {
+							if (d.Sales <110) {return "blue";}
+							else if (d.Sales <=300) {return "yellow";}
+							else if (d.Sales <=500) {return "red";}
+							else {return "grey";}
+							});
+					
+			svgContainer.append("g")
+				.attr("transform","translate(45,0)")
+				.call(yaxis);
+			
+			svgContainer.append("g")
+				.attr("transform","translate(50,300)")
+				.call(xaxis)
+				.selectAll("text")
+					.attr("transform","rotate(60)")
+					.attr("text-anchor","start")
+					.attr("x",16)
+					.attr("y",1);
+				
+				
+			<!-- svgRect.enter() -->
+				<!-- .append("rect") -->
+				<!-- .attr("fill","black") -->
+				<!-- .attr("x",100) -->
+				<!-- .attr("y",50) -->
+				<!-- .transition() -->
+				<!-- .duration("3000") -->
+				<!-- .ease(d3.easeCircleIn) -->
+				<!-- .attr("x", function(data,i){return 50+(i*51);}) -->
+				<!-- .attr("y", function(d) { return 600 - (d.Temp*5);} ) -->
+				<!-- .attr("width",40) -->
+				<!-- .attr("height", function(d) {return d.Temp*5;}) -->
+				<!-- .attr("fill", "red"); -->
+				<!-- .attr("fill",function(d) { -->
+						<!-- if (d.Temp<10)  {return "blue";} -->
+						<!-- else if (d.Temp<50)  {return "red";} -->
+						<!-- else if (d.Temp<100)  {return "green";} -->
+						<!-- else {return "red";} -->
+						<!-- }); -->
+								
+		}
+	);
+</script>
+	
