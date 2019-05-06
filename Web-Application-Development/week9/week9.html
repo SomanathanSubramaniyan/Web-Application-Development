@@ -1,0 +1,86 @@
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+<title> Week 9  - SVG </title>
+<script src="https://d3js.org/d3.v5.min.js"> </script>
+<style>
+
+  .myclass {border: 2px  Solid black;}
+
+</style>
+
+</head>
+
+<body>
+
+<svg class="myclass" width="10" height="10" id="mySvg">
+
+<rect x="250" y="250" width="100" height="100" fill="red"/>
+<circle cx="400" cy="200" r="100" stroke="blue" stroke-width="20" fill="yellow"/>
+</svg>
+
+<div id="svg-area"></div>
+
+</body>
+
+<script>
+
+var svgContainer = d3.select("#mySvg");
+var myRectangle = svgContainer.append("rect");
+myRectangle.attr("x",500);
+myRectangle.attr("y",500);
+myRectangle.attr("height",200);
+myRectangle.attr("width",400);
+myRectangle.attr("stroke","green");
+myRectangle.attr("stroke-width",10);
+myRectangle.attr("fill", "red");
+
+
+var myCircle = svgContainer.append("circle")
+		.attr("cx",300)
+		.attr("cy",600)
+		.attr("r",69)
+		.attr("fill","black");
+		
+var svgContainera = d3.select("#svg-area").append("svg")
+		.attr("height", 1400)
+		.attr("width",1400)
+		.attr("class","myclass");
+		
+var myArray = [10,150,200,250,5,10,150,200,250];
+
+//for(i=0; i < myArray.length; i++) {
+// alert(myArray[i]);
+// }
+
+let svgCircle = svgContainera.selectAll("circle")
+					.data(myArray);
+
+svgCircle.enter()
+		.append("circle")
+		.attr("cx", function(d, i){return 150 + (i*50);})
+		.attr("cy",50)
+		.attr("r",function(d){return d;})
+		.attr("fill","green");
+		
+let svgRectangle = svgContainera.selectAll("rect")
+		.data(myArray);
+		
+svgRectangle.enter()
+	.append("rect")
+	.attr("height",function(d) {return d;})
+	.attr("width",40)
+	.attr("x",function(d, i) {return 50 + (i*50);})
+	.attr("y",400)
+	.attr("fill","green");
+	
+
+</script>
+
+
+
+</html>

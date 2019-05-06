@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<!-- Author : Somu -->
+
+<head>
+	<title> Input Form </title>
+</head>
+
+<body>
+
+	<form  style="width:60%;text-align:center-left;">
+		First Name:<br>
+		<input type="text" /> <br>
+		Last Name:<br>
+		<input type="text"/>  <br>
+		Email Address:<br>
+		<input type="email"/>  <br> <br>
+		Date of Birth: <input type="date" /> <br> <br> <br>
+		
+		<fieldset style="width:60%;text-align:center-left;">
+			<legend>Credit Card Type:</legend> <br><br>
+			
+	<input type="radio" name="creditcard" value="Visa"/> <img src="images/Visa.png" hspace="20" width="100" height="50" align="center"> <br>
+	<input type="radio" name="creditcard" value="VisaDebit"/><img src="images/VisaDebit.png" hspace="20" width="100" height="50" align="center"><br>
+	<input type="radio" name="creditcard" value="MasterCard"/><img src="images/MasterCard.png" hspace="20" width="100" height="50" align="center"><br>
+	<input type="radio" name="creditcard" value="AmericanExpress"/><img src="images/AmericanExpress.png" hspace="20" width="100" height="50" align="center"><br><br><br>
+			
+			<input type="number" />Credit Card Number <br> <br>
+			Expiry Year: 
+			<Select>
+				<option Selected="selected">2019</option>
+				<option> 2020</option>
+				<option> 2021</option>
+				<option> 2022</option>
+			</Select> <br>
+			Expiry Month: 
+			<Select>
+				<option Selected="selected">Select Month</option>
+				<option> Jan </option>
+				<option> Feb </option>
+				<option> Mar </option>
+				<option> Apr </option>
+				<option> May </option>
+				<option> Jun </option>
+				<option> Jul </option>
+				<option> Aug </option>
+				<option> Sep </option>
+				<option> Oct </option>
+				<option> Nov </option>
+				<option> Dec </option>
+			</Select> <br>
+		</fieldset>
+		
+
+		<p>Additional Notes:</p>
+		<textarea name="message" cols="60" rows="4">
+			Enter your comments here...
+		</textarea> <br> <br>
+		
+		<input type="submit" value="Submit Card Details">
+	</form>
+
+</body>
+
+</html>

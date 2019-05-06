@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<!-- Author : Somu  Date: April 2019-->
+<!-- Cource : Web Application Development -->
+<!--  WEBSITE DEVELOPMENT ASSIGNMENT  -->
+
+<head>
+	<!-- Style Setting and relative positioning of the User Name and Password input boxes 
+	     Keep the Screen name as "Login Screen"
+		 Create a CSS class and set the style of the website
+	-->
+	<title> Login Screen </title>
+	<style>
+	.d1 {   position: relative;
+	    	background-color: lightblue;
+			border: 5px solid green;
+			padding: 30px;
+			font-family: "Lucida Console", Monaco, monospace;
+		}
+	</style>
+</head>
+
+<body>
+<div class="d1">
+<h1 align="center"> Ireland - Road Accidents Register</h1>
+</div>
+	<!-- <form  Use the sytle sheet "d1"
+				Login name is email address
+				Password should be atleast 5 character long
+				Call functions ValidateUserpwd and forgotPassword functions to validate the input
+	-->
+	<form class="d1" id="myForm">
+		User Name:
+		<input type="email" placeholder="Enter your email" id="uName" > <br> <br>
+		Password  :
+		<input type="password" placeholder="Enter Password" id="pWord" minlength="5"/>  <br> <br>
+		
+		<button onclick="validateUserpwd()"> Submit </button>
+		<button onclick="forgotPassword()"> Forgot Password </button>
+	</form>
+<div class="d1">
+<h5> Designed By : Somanthan, GMIT <br>
+	 Student Id  : G00364742</h5>
+</div>
+</body>
+<script>
+
+	<!-- JavaScript to validate the user id and password -->
+
+function validateUserpwd() {
+		if((document.getElementById("uName").value != "") && (document.getElementById("pWord").value =="guest"))
+			{
+				alert("The entered User name and Password credentials are valid");
+			}
+		else 
+			{
+				alert("Enter valid User name and Password");
+			}
+}	
+
+<!-- JavaScript to show the default password-->
+
+function forgotPassword() {
+		if((document.getElementById("pWord").value != "") && (document.getElementById("pWord").value !="guest"))
+			{
+				alert("Enter the correct password. The temporary password is 'guest' ");
+			}
+		else 
+			{
+				alert("The temporary password is 'guest' ");
+			}
+}	
+
+
+
+
+</script>
+
+
+</html>

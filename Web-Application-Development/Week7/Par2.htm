@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Java Script</title>
+	
+	<style>
+ 		.doc {
+			//  position:relative;
+			  background-color: red;
+			//  top:20px;
+			//  left:30px;
+			  clear: left;
+			  float: left;
+			  width:300px;
+			  height:200px;}
+		.doc1 {
+			//	position:relative;
+			//  left:30px;
+			//	top:10px;
+			//	clear: left;
+				float: left;
+				background-color: green;
+				width:300px;
+				height:200px;}
+		.doc2 {
+			//	position:relative;
+			//	left:30px;
+			//	top:10px;
+				clear: left;
+				float: left;
+				background-color: orange;
+				width:300px;
+				height:200px;}
+	</style>
+</head>
+<body>
+
+		<div class="doc1">
+			<text> Number 1: </text> <input id="in1" /> <br> <br>
+			<text> Number 2: </text> <input id="in2" /> <br> <br>
+			<button onclick="add()"> Add </button> 
+			<button onclick="Multiply()"> Multiply </button> 
+			<button onclick="Divide()"> Divide </button> <br> <br>
+			<text id="text"> </text> <br> <br>
+			<text>************************************</text>  <br> <br>
+		</div>
+
+		<div class="doc2">
+			<h2> Guessing Game </h2>  <br><br>
+			<text> Enter a Number </text> 
+			<input id="game"/> <br>
+			<button onclick="game()">Check</button>  <br> <br>
+			<text id="Guesscheck"> </text> <br><br>
+			<text>*********************************</text>  <br> <br>
+		</div>
+		
+		<div class="doc">
+			This is div1 <br>
+			<button onclick="changetxt()" > Change text </button>
+			<h1 id="1">  This is JavaScript </h1>
+			<text>***********************************</text> <br> <br>
+		</div>
+
+</body>
+
+
+<script>
+asdfasdf
+function game(){
+var num = Number(document.getElementById("game").value);
+var gen = Math.ceil(Math.random() * 10);
+
+if (num == gen) 
+{
+alert(gen);
+document.getElementById("Guesscheck").innerHTML = "The number Matches.Good Guess";
+}
+
+}
+
+function changetxt() {
+ var par = document.getElementById("1");
+	par.innerHTML =" This is a DOM example";
+}
+
+function add() {
+
+var inp1 = Number(document.getElementById("in1").value);
+var inp2 = Number(document.getElementById("in2").value);
+
+document.getElementById("text").innerHTML=inp1+inp2
+
+//alert(inp1+inp2);
+//document.write(inp1+inp2);
+
+}
+
+function Divide() {
+
+var inp1 = Number(document.getElementById("in1").value);
+var inp2 = Number(document.getElementById("in2").value);
+
+document.getElementById("text").innerHTML= "Answer :" + inp1 + " divided by " + inp2 + " is " +  inp1/inp2
+
+//alert(inp1+inp2);
+//document.write(inp1+inp2);
+
+}
+
+function Multiply() {
+
+var inp1 = Number(document.getElementById("in1").value);
+var inp2 = Number(document.getElementById("in2").value);
+
+document.getElementById("text").innerHTML= "Answer :" + inp1 + " multiplied by " + inp2 + " is " +  inp1 * inp2
+
+//alert(inp1+inp2);
+//document.write(inp1+inp2);
+
+}
+</script>
+</html>
