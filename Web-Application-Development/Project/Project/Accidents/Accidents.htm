@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<!-- Author : Somu  Date: April 2019-->
+<!-- Cource : Web Application Development -->
+<!--  WEBSITE DEVELOPMENT ASSIGNMENT  -->
+
+<head>
+	<!-- Style Setting and relative positioning of the User Name and Password input boxes 
+	     Keep the Screen name as "Login Screen"
+		 Create a CSS class and set the style of the website
+	-->
+	<title> Login Screen </title>
+	<style>
+	.d1 {   position: relative	;
+	    	background-color: lightblue;
+			border: 5px solid green;
+			padding: 30px;
+			font-family: "Lucida Console", Monaco, monospace;
+		}
+	label {
+			display: inline-block;
+			float: left;
+			clear: left;
+			width: 250px;
+			text-align: right; }
+	input {
+			display: inline-block;
+			float: left;
+			}	
+	button {
+			position: relative;
+			bottom: 10px;
+			left: 20%;
+			}
+			
+	table {
+				border: 2px solid black;
+				text-align:: center;
+				background-color: white; 
+				width:50%;
+				height:10px;
+}
+			
+
+	</style>
+</head>
+
+<body>
+<div  style="height:10%">
+<h5 align="center"> Register New Accidents Details </h5>
+</div>
+	<!-- <form  Use the sytle sheet "d1"
+				Login name is email address
+				Password should be atleast 5 character long
+				Call functions ValidateUserpwd and forgotPassword functions to validate the input
+	-->
+	<div class="d1" id="myForm">
+		<label> Province: </label>
+			<Select name="driverProvince" required id="dProvince">
+				<option Selected= "selected">Leinster </option>
+				<option> Ulster </option>
+				<option> Munster </option>
+				<option> Connacht </option>
+			</Select> <br> <br>
+		<label> Vehicle Type : </label>
+			<Select name="vehicelType" required id="vType">
+				<option Selected= "selected">Car </option>
+				<option> Bike </option>
+				<option> Lorry </option>
+				<option> Bus </option>
+				<option> Others </option>
+			</Select> <br> <br>
+		<label> Driver Age : </label>
+			<Select name="driverAge" required id="dAge">
+				<option Selected= "selected">16 to 30 Years </option>
+				<option> 31 to 40 Years </option>
+				<option> 41 to 50 Years </option>
+				<option> 51 to 60 Years </option>
+				<option> Greater than 61 Years </option>
+			</Select> <br> <br>
+		<label> Driver Sex       : </label>
+			<Select name="driverSex" required id="dSex">
+				<option Selected= "selected">Male</option>
+				<option> Female</option>
+			</Select> <br> <br>
+		<label> Month and Year : </label> 
+		<input type="month" name="monthYear" id="mYear" min="2010-01" value="2019-05" required> 
+		<br> <br>
+		<br> <br>
+		<button onclick="saveDts()" right="250"> Save  </button>
+		<button onclick="clearDts()"> Clear  </button>
+	</div>
+	
+<div class="d1">
+
+	<p>Click the buttons to create and delete row(s) for the table.</p>
+
+	<table id="myTable">
+		<tr align="centre">
+			<th>Province</th>
+			<th>Vehicle Type</th>
+			<th>Age</th>
+			<th>Sex</th>
+			<th >Month and Year</th>
+		</tr>
+	</table>
+</div>
+</body>
+<script>
+
+	<!-- JavaScript to validate the user id and password -->
+	
+	function saveDts() {
+            var csvData = new Array();  // To collect the names
+            // Collecting the names
+            csvData[0] = document.getElementById('dProvince').value;
+            csvData[1] = document.getElementById('vType').value;
+            csvData[2] = document.getElementById('dAge').value;
+			csvData[3] = document.getElementById('dSex').value;
+			csvData[4] = document.getElementById('mYear').value;
+			
+				var table = document.getElementById("myTable");
+				var row = table.insertRow(1);
+				var province = row.insertCell(0);
+				var Type = row.insertCell(1);
+				var Age = row.insertCell(2);
+				var Sex = row.insertCell(3);
+				var	Year= row.insertCell(4);
+				province.innerHTML = csvData[0];
+				Type.innerHTML = csvData[1];
+				Age.innerHTML = csvData[2];
+				Sex.innerHTML = csvData[3];
+				Year.innerHTML = csvData[4];
+    alert("Data Added Successfully");
+        }
+
+
+</script>
+
+
+</html>

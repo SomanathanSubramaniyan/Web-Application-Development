@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<title> D3 - Reading from CSV file </title>
+
+<style>
+
+
+	.d1 {   float:left;
+			background-color: #1E90FF;
+			font-family: "Lucida Console", Monaco, monospace;
+			width:1200px;
+			height:80px;
+			border: 5px solid green;
+		}
+
+	.div3 { float:left;
+			background-color: #ADD8E6;
+			height:380px;
+			width:500px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+			}
+	.div2 { float:left;
+			background-color: white;
+			height:380px;
+			width:50px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;	
+			border: 5px solid green;			
+			}
+	.div1 { clear: left;
+			float:left;
+			background-color: #ADD8E6;
+			height:380px;
+			width:600px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+			}
+	.p1	  {
+			width:600px;
+			margin:5px;
+		  }
+	.p2	  {
+			width:100px;
+		  }
+	.btn  {
+			background-color:green;
+			margin-left:auto;
+			margin-right:auto;
+			margin-top:22%;
+			margin-bottom:0%;
+		  }
+
+	rect:hover {fill:black;}
+	.myClass {
+			border: 2px solid	black;
+			margin-top: 2px;)
+	
+</style>
+
+</head>
+
+<body>
+		<div class="d1" >
+			<h3 align="center" style="color:white; align:center;"> Ireland - Road Accidents Register</h3>
+			<h4 align="center" style="color:white;"> Graphs generated from the data in the CSV file</h4>
+			<button class="btn" align="left"><i class="fa fa-home"></i> Home</button> 	
+		</div> 
+
+		<div id="myDiv-l1"  class="div1" >   
+			<h2 class="p1"> Graph plot from the CSV files asdasdf   </h2>
+			<form onsubmit="mainCheck()">
+			Graph Height:
+			<input type="number" id="gheight" min="100" max="500"/> <br>
+			<input type="submit"  value="Submit"/> 
+			</form>
+		</div>
+		<div id="myDiv-12"  class="div2">  </div>
+		<div id="myDiv-l3"  class="div3"> 
+		</div>
+
+</body>
+
+<script>
+function mainCheck()
+	{
+		if((document.getElementById("gheight").value >= 100 ) && (document.getElementById("gheight").value <=500))
+			{
+			alert(document.getElementById("gheight").value);
+			graph()
+			}
+		else
+			{
+			alert("Enter valid height");
+			}
+	}
+function graph() 
+	
+	{
+		d3.csv("Accidents.csv").then 
+			(function(data)
+				{
+					console.log(data);
+				
+		// Convert into Numbers
+					data.forEach(function(d) {
+						d.Accidents = Number(d.Accidents);
+						});
+					
+			var height = 300;
+			var dataCount = data.length;
+			var width = 350;
+		
+				
+		// Create a Scale		
+					let myScale =  d3.scaleLinear()
+								.domain([0,d3.max(data, function(d) {
+												return d.Accidents;
+														})
+														])
+								.range([height,0]);
+							
+		// Create a XScale		
+					let XScale = d3.scaleBand()
+								.domain(data.map(function (d) { return d.County;}))
+								.range([0,width]);
+		// Create y Axis
+					var yaxis = d3.axisLeft()
+						.scale(myScale);
+					
+		// Create x Axis
+					var xaxis = d3.axisBottom()
+						.scale(XScale);
+					
+				
+					var svgContainer = d3.select("#myDiv-l3").append("svg")
+							.attr("width",500)
+							.attr("height",380)
+							.attr("align","center")
+					<!--		.attr("class","myClass"); -->
+									
+					var svgRectangle = svgContainer.selectAll("rect").data(data);
+						 svgRectangle.enter()
+							.append("rect")
+							.transition()
+							.duration(3000)
+							.delay(1000)
+							//.ease(d3.easeBounce)
+							//.ease(d3.easeCircleIn)
+							.ease(d3.easeElastic)
+							.attr("x",function(d,i) {return 50+(i*width/dataCount);})
+							.attr("y",function(d){return (myScale(d.Accidents));})
+							.attr("width",40)
+							.attr("height",function(d) {return height-myScale(d.Accidents);})
+							.attr("fill", function (d) {
+									if (d.Accidents <70) {return "green";}
+									else if (d.Accidents <=150) {return "yellow";}
+									else if (d.Accidents <=300) {return "red";}
+									else {return "green";}
+									});
+						
+					svgContainer.append("g")
+						.attr("transform","translate(45,0)")
+						.call(yaxis);
+					
+					svgContainer.append("g")
+						.attr("transform","translate(50,"+height+")")
+						.call(xaxis)
+						.selectAll("text")
+							.attr("transform","rotate(60)")
+							.attr("text-anchor","start")
+							.attr("x",16)
+							.attr("y",1);
+				}
+			);
+	}
+</script>
+
+</html>
