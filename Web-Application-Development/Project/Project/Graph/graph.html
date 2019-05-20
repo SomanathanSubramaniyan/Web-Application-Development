@@ -12,7 +12,7 @@
 			background-color: #1E90FF;
 			font-family: "Lucida Console", Monaco, monospace;
 			width:1200px;
-			height:80px;
+			height:100px;
 			border: 5px solid green;
 		}
 
@@ -50,22 +50,57 @@
 	.p1	  {
 			width:600px;
 			margin:5px;
-		  }
-	.p2	  {
-			width:100px;
-		  }
-	.btn  {
-			background-color:green;
-			margin-left:auto;
-			margin-right:auto;
-			margin-top:22%;
-			margin-bottom:0%;
+			text-align: center;
+			color: rgb(14, 11, 236);
+			font-family: "Lucida Console", Monaco, monospace;
+
+			}
+	.bon  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    		border:2px solid #ccc; 
+        	border-radius: 5px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: relative;
+			left: 40%;
+			color: #ADD8E6;
 		  }
 
+		  .bon1  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    		border:2px solid #ccc; 
+        	border-radius: 5px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 3%;
+			color: #ADD8E6;
+		  }
 	rect:hover {fill:black;}
-	.myClass {
+	.myClass 
+		{
 			border: 2px solid	black;
-			margin-top: 2px;)
+			margin-top: 2px;
+		}
+	input {
+  		display: inline-block;
+		padding:5px; 
+    	border:2px solid #ccc; 
+        border-radius: 5px;
+		font-family: "Lucida Console", Monaco, monospace;
+		}
+	label{
+    display: inline-block;
+    width: 400px;
+    text-align: right;
+	text-anchor: middle;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: small;
+	}
+
 	
 </style>
 
@@ -73,18 +108,25 @@
 
 <body>
 		<div class="d1" >
-			<h3 align="center" style="color:white; align:center;"> Ireland - Road Accidents Register</h3>
+			<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
 			<h4 align="center" style="color:white;"> Graphs generated from the data in the CSV file</h4>
-			<button class="btn" align="left"><i class="fa fa-home"></i> Home</button> 	
+			<button class="bon1" >Home</button> 	
 		</div> 
 
 		<div id="myDiv-l1"  class="div1" >   
-			<h2 class="p1"> Graph plot from the CSV files asdasdf   </h2>
-			<form onsubmit="mainCheck()">
-			Graph Height:
-			<input type="number" id="gheight" min="100" max="500"/> <br>
-			<input type="submit"  value="Submit"/> 
-			</form>
+			<h5 class="p1"> Enter the parameters for the "County Vs Number of Accidents" Bar chart </h5> <br><br>
+			<label> Enter Chart Height (pixels) : </label>
+			<input type="number" id="gheight" min="100" max="500" value = "300" size="3"/> <br><br>
+			<label> Enter Chart  Width (pixels) : </label>
+			<input type="number" id="gwidth" min="100" max="500" value = "350" size="3"  /> <br><br>
+			<label> Select Chart color (accidents < 70) : </label>
+			<input type="color" id="clrPicker1"/> <br> <br>
+			<label> Select Chart color (accidents < 150) : </label>
+			<input type="color" id="clrPicker2"/> <br> <br>
+			<label> Select Chart color (accidents >150) : </label>
+			<input type="color" id="clrPicker3"/> <br> <br>
+			<button onclick="mainCheck()" class="bon" align="center"> Submit </button> 
+		<!-- <input type="reset" value="Reset" onClick="window.location.reload()"> -->
 		</div>
 		<div id="myDiv-12"  class="div2">  </div>
 		<div id="myDiv-l3"  class="div3"> 
@@ -95,19 +137,20 @@
 <script>
 function mainCheck()
 	{
-		if((document.getElementById("gheight").value >= 100 ) && (document.getElementById("gheight").value <=500))
+		if( ((document.getElementById("gheight").value >= 100 ) && (document.getElementById("gheight").value <=500)) && ((document.getElementById("gwidth").value >= 100 ) && (document.getElementById("gwidth").value <= 500)) )
 			{
-			alert(document.getElementById("gheight").value);
 			graph()
 			}
 		else
 			{
-			alert("Enter valid height");
+			alert("Enter valid height and width - should be between 300 and 500");
 			}
 	}
+
+
 function graph() 
-	
 	{
+
 		d3.csv("Accidents.csv").then 
 			(function(data)
 				{
@@ -117,10 +160,14 @@ function graph()
 					data.forEach(function(d) {
 						d.Accidents = Number(d.Accidents);
 						});
-					
-			var height = 300;
+		
+		// Get the height and width of the elements from the input parameters
+			var height = document.getElementById("gheight").value;
 			var dataCount = data.length;
-			var width = 350;
+			var width = document.getElementById("gwidth").value;
+			var color1 = document.getElementById("clrPicker1").value;
+			var color2 = document.getElementById("clrPicker2").value;
+			var color3 = document.getElementById("clrPicker3").value;
 		
 				
 		// Create a Scale		
@@ -143,12 +190,12 @@ function graph()
 					var xaxis = d3.axisBottom()
 						.scale(XScale);
 					
-				
+					d3.select("#myDiv-l3").selectAll("*").remove();
 					var svgContainer = d3.select("#myDiv-l3").append("svg")
 							.attr("width",500)
 							.attr("height",380)
 							.attr("align","center")
-					<!--		.attr("class","myClass"); -->
+					// <!--		.attr("class","myClass"); -->
 									
 					var svgRectangle = svgContainer.selectAll("rect").data(data);
 						 svgRectangle.enter()
@@ -164,9 +211,9 @@ function graph()
 							.attr("width",40)
 							.attr("height",function(d) {return height-myScale(d.Accidents);})
 							.attr("fill", function (d) {
-									if (d.Accidents <70) {return "green";}
-									else if (d.Accidents <=150) {return "yellow";}
-									else if (d.Accidents <=300) {return "red";}
+									if (d.Accidents <70) {return color1;}
+									else if (d.Accidents <=150) {return color2;}
+									else if (d.Accidents >150) {return color3;}
 									else {return "green";}
 									});
 						
@@ -181,7 +228,9 @@ function graph()
 							.attr("transform","rotate(60)")
 							.attr("text-anchor","start")
 							.attr("x",16)
-							.attr("y",1);
+							.attr("y",1)
+							;
+
 				}
 			);
 	}
