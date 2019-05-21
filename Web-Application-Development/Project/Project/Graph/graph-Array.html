@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<title> D3 - Reading from CSV file </title>
+<!-- Author Somu 
+Display Bar and Circle charts based on the information keyed into the -->
+<style>
+
+
+	.d1 {   float:left;
+			background-color: #1E90FF;
+			font-family: "Lucida Console", Monaco, monospace;
+			width:1200px;
+			height:100px;
+			border: 5px solid green;
+		}
+
+	.div3 { float:left;
+			background-color: #ADD8E6;
+			height:400px;
+			width:500px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+			}
+	.div2 { float:left;
+			background-color: white;
+			height:400px;
+			width:50px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;	
+			border: 5px solid green;			
+			}
+	.div1 { clear: left;
+			float:left;
+			background-color: #ADD8E6;
+			height:400px;
+			width:600px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+			}
+	.p1	  {
+			width:600px;
+			margin:5px;
+			text-align: center;
+			color: rgb(14, 11, 236);
+			font-family: "Lucida Console", Monaco, monospace;
+
+			}
+	.bon  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    		border:2px solid #ccc; 
+        	border-radius: 5px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: relative;
+			left: 40%;
+			color: #ADD8E6;
+		  }
+
+		  .bon1  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:4px; 
+    		border:2px solid #ccc; 
+        	border-radius: 4px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 3%;
+			color: #ADD8E6;
+		  }
+	rect:hover {fill:black;}
+	.myClass 
+		{
+			border: 2px solid	black;
+			margin-top: 2px;
+		}
+	input {
+  		display: inline-block;
+		padding:4px; 
+    	border:2px solid #ccc; 
+        border-radius: 4px;
+		font-family: "Lucida Console", Monaco, monospace;
+		}
+	label{
+    display: inline-block;
+    width: 400px;
+    text-align: right;
+	text-anchor: middle;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size:x-small;
+	}
+
+	
+</style>
+
+</head>
+
+<body>
+		<div class="d1" >
+			<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
+			<h4 align="center" style="color:white;"> Bar and Circle Charts from an Array</h4>
+			<button class="bon1" >Home</button> 	
+		</div> 
+
+		<div id="myDiv-l1"  class="div1" >   
+            <h5 class="p1"> Enter the parameters for the chart</h5> <br>
+          
+			<label> Enter Chart Height (pixels) : </label>
+			<input type="number" id="gheight" min="100" max="500" value = "300" size="3"/> <br>
+			<label> Enter Chart  Width (pixels) : </label>
+			<input type="number" id="gwidth" min="100" max="500" value = "350" size="3"  /> <br>
+			<label> Select Chart color (accidents < 70) : </label>
+			<input type="color" id="clrPicker1"/> <br> 
+			<label> Select Chart color (accidents < 150) : </label>
+			<input type="color" id="clrPicker2"/> <br> 
+			<label> Select Chart color (accidents >150) : </label>
+            <input type="color" id="clrPicker3"/> <br> 
+			<label>Number of Accidents during Winter: </label>
+            <input type="number" id="aWinter" min="50" max="200" size="3"  /> <br>
+            <label>Number of Accidents during Spring: </label>
+            <input type="number" id="aSpring" min="50" max="200" size="3"  /> <br>
+            <label> Number of Accidents during Summer: </label>
+			<input type="number" id="aSummer" min="50" max="200"  size="3"/> <br>
+            <label>Number of Accidents during Autumn: </label>
+			<input type="number" id="aAutumn" min="50" max="200" size="3"  /> <br> <br>
+            <button  onclick="mainCheck()" class="bon" align="center"> Bar Chart </button> 
+            <button  onclick="CmainCheck()" class="bon" align="center"> Circle Chart </button> 
+		</div>
+		<div id="myDiv-12"  class="div2">  </div>
+		<div id="myDiv-l3"  class="div3"> 
+		</div>
+
+</body>
+
+<script>
+
+function mainCheck()
+	{
+		if( ((document.getElementById("gheight").value >= 300 ) && (document.getElementById("gheight").value <=600)) && ((document.getElementById("gwidth").value >= 300 ) && (document.getElementById("gwidth").value <= 600)) )
+			{
+                var Spring = document.getElementById("aSpring").value;
+                var Winter = document.getElementById("aWinter").value;
+                var Summer = document.getElementById("aSummer").value;
+                var Autumn = document.getElementById("aAutumn").value;
+
+                if ((((Spring)>=20) && ((Spring)<=200)) && (((Winter)>=20) && ((Winter)<=200)) && (((Summer)>=20) && ((Summer)<=200)) && (((Autumn)>=20) && ((Autumn)<=200)))
+                {
+
+			    graph()
+                
+                }
+                else
+                {
+                
+                    alert("Enter valid accident number - should be between 20 and 200");
+                }
+            }
+		else
+			{
+			alert("Enter valid height and width - should be between 300 and 500");
+			}
+	}
+
+    function CmainCheck()
+	{
+		if( ((document.getElementById("gheight").value >= 350 ) && (document.getElementById("gheight").value <=600)) && ((document.getElementById("gwidth").value >= 400 ) && (document.getElementById("gwidth").value <= 500)) )
+			{
+                var Spring = document.getElementById("aSpring").value;
+                var Winter = document.getElementById("aWinter").value;
+                var Summer = document.getElementById("aSummer").value;
+                var Autumn = document.getElementById("aAutumn").value;
+
+                if ((((Spring)>=20) && ((Spring)<=200)) && (((Winter)>=20) && ((Winter)<=200)) && (((Summer)>=20) && ((Summer)<=200)) && (((Autumn)>=20) && ((Autumn)<=200)))
+                {
+
+                    circlegraph()
+                
+                }
+                else
+                {
+                
+                    alert("Enter valid accident number - should be between 20 and 200");
+                }
+            }
+		else
+			{
+			alert("Enter valid height and width - should be between 350 and 500");
+			}
+	}
+
+
+
+function graph() 
+	{
+
+
+    	// Get the height and width of the elements from the input parameters
+			var height = document.getElementById("gheight").value;
+			var width = document.getElementById("gwidth").value;
+			var color1 = document.getElementById("clrPicker1").value;
+			var color2 = document.getElementById("clrPicker2").value;
+			var color3 = document.getElementById("clrPicker3").value;
+
+            var Spring = document.getElementById("aSpring").value;
+            var Winter = document.getElementById("aWinter").value;
+            var Summer = document.getElementById("aSummer").value;
+            var Autumn = document.getElementById("aAutumn").value;
+
+            var myArray = [Spring,Winter,Summer,Autumn]
+			var myArrayname = ["Spring","Winter","Summer","Autumn"]
+
+			d3.select("#myDiv-l3").selectAll("*").remove();
+
+		// Create a XScale		
+					let XScale = d3.scaleBand()
+								.domain(myArrayname.map(function (d) { return d;}))
+								.range([0,width]);
+				
+		// Create x Axis
+					var xaxis = d3.axisBottom()
+						.scale(XScale);
+			
+            var svgContainer = d3.select("#myDiv-l3").append("svg")
+					.attr("width",width)
+					.attr("height",height)
+					.attr("align","center")
+												
+			var myRectangle = svgContainer.selectAll("rect").data(myArray);
+
+					myRectangle.enter()
+							.append("rect")
+							.transition()
+							.duration(3000)
+							.delay(1000)
+							//.ease(d3.easeBounce)
+							//.ease(d3.easeCircleIn)
+							.ease(d3.easeElastic)
+							.attr("x",function(d,i) {return 50+(i*100);})
+							.attr("y",function (d) {return (height-d);})
+							.attr("width",50)
+							.attr("height",function(d) {return (d);})
+							.attr("fill", function (d) {
+									if (d <70) {return color1;}
+									else if (d <=150) {return color2;}
+									else if (d >150) {return color3;}
+									else {return "green";}
+									});
+												
+			var myLabel = svgContainer.selectAll("text").data(myArray);
+
+					myLabel.enter()
+							.append("text")
+                            .transition()
+							.duration(3000)
+							.delay(1000)
+							.attr("x",function(d,i) {return 70 +(i*100);})
+							.attr("y",function (d) {return (height-(d-15));})
+                            .attr("text-anchor","middle")
+                            .attr("font-family", "Lucida Console")
+                            .attr("font-Size","20px")
+                            .attr("fill","white")
+                            .text(function(d) {return (d);}) ;
+
+	}
+    // Cricle Chart/Graph from an Array
+    function circlegraph() 
+	{
+
+    	// Get the height and width of the elements from the input parameters
+			var height = document.getElementById("gheight").value;
+			var width = document.getElementById("gwidth").value;
+			var color1 = document.getElementById("clrPicker1").value;
+			var color2 = document.getElementById("clrPicker2").value;
+			var color3 = document.getElementById("clrPicker3").value;
+
+            var Spring = document.getElementById("aSpring").value;
+            var Winter = document.getElementById("aWinter").value;
+            var Summer = document.getElementById("aSummer").value;
+            var Autumn = document.getElementById("aAutumn").value;
+
+            var myArray = [Spring,Winter,Summer,Autumn]
+
+			d3.select("#myDiv-l3").selectAll("*").remove();
+			
+            var svgContainer = d3.select("#myDiv-l3").append("svg")
+					.attr("width",width)
+					.attr("height",height)
+					.attr("align","center")
+            
+            let svgCircle = svgContainer.selectAll("circle")
+					.data(myArray);
+
+            svgCircle.enter()
+		        .append("circle")
+		        .attr("cx", function(d, i){return 60 + (i*120);})
+		        .attr("cy",180)
+		        .attr("r",function(d){return d/4;})
+                .attr("fill", function (d) {
+									if (d <70) {return color1;}
+									else if (d <=150) {return color2;}
+									else if (d >150) {return color3;}
+									else {return "green";}
+									});
+            
+			var myLabel = svgContainer.selectAll("text").data(myArray);
+
+					myLabel.enter()
+							.append("text")
+                            .transition()
+							.duration(3000)
+							.delay(1000)
+							.attr("x",function(d,i) {return 60 + (i*120);})
+							.attr("y",160)
+                            .attr("text-anchor","middle")
+                            .attr("font-family", "Lucida Console")
+                            .attr("font-Size","20px")
+                            .attr("fill","white")
+                            .text(function(d) {return (d);}) ;
+
+
+												
+			// var myRectangle = svgContainer.selectAll("rect").data(myArray);
+
+			// 		myRectangle.enter()
+			// 				.append("rect")
+			// 				.transition()
+			// 				.duration(3000)
+			// 				.delay(1000)
+			// 				//.ease(d3.easeBounce)
+			// 				//.ease(d3.easeCircleIn)
+			// 				.ease(d3.easeElastic)
+			// 				.attr("x",function(d,i) {return 50+(i*100);})
+			// 				.attr("y",function (d) {return (height-d);})
+			// 				.attr("width",50)
+			// 				.attr("height",function(d) {return (d);})
+			// 				.attr("fill", function (d) {
+			// 						if (d <70) {return color1;}
+			// 						else if (d <=150) {return color2;}
+			// 						else if (d >150) {return color3;}
+			// 						else {return "green";}
+			// 						});
+												
+			// var myLabel = svgContainer.selectAll("text").data(myArray);
+
+			// 		myLabel.enter()
+			// 				.append("text")
+            //                 .transition()
+			// 				.duration(3000)
+			// 				.delay(1000)
+			// 				.attr("x",function(d,i) {return 70 +(i*100);})
+			// 				.attr("y",function (d) {return (height-(d-15));})
+            //                 .attr("text-anchor","middle")
+            //                 .attr("font-family", "Lucida Console")
+            //                 .attr("font-Size","20px")
+            //                 .attr("fill","white")
+            //                 .text(function(d) {return (d);}) ;
+
+	}
+</script>
+
+</html>
