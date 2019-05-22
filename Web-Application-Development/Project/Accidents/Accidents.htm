@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+<!-- Author : Somu  Date: April 2019-->
+<!-- Cource : Web Application Development -->
+<!--  WEBSITE DEVELOPMENT ASSIGNMENT  -->
+
+<head>
+	<!-- Style Setting and relative positioning of the User Name and Password input boxes 
+	     Keep the Screen name as "Login Screen"
+		 Create a CSS class and set the style of the website
+	-->
+	<title> Accident Details Screen</title>
+	<style>
+	
+	.div1 { float:left;
+			background-color: #1E90FF;
+			font-family: "Lucida Console", Monaco, monospace;
+			width:1230px;
+			height:100px;
+			border: 5px solid green;
+		}
+	.d1 {   clear: left;
+			float:left;
+			background-color: #ADD8E6;
+			height:400px;
+			width:500px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+		}
+	.div2 { float:left;
+			background-color: #ADD8E6;
+			height:400px;
+			width:700px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;	
+			border: 5px solid green;			
+			}
+	.p1	  {
+			width:600px;
+			margin:5px;
+			text-align: center;
+			color: rgb(14, 11, 236);
+			font-family: "Lucida Console", Monaco, monospace;
+
+			}
+
+	input {
+  		display: inline-block;
+		padding:4px; 
+    	border:2px solid #ccc; 
+        border-radius: 4px;
+		height: 20px;
+		font-family: "Lucida Console", Monaco, monospace;
+		}
+	select {
+		display: inline-block;
+    width: 100px;
+	height: 20px;
+    text-align: right;
+	text-anchor: middle;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size:x-small;
+	}
+	label{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+		text-anchor: middle;
+		font-family: "Lucida Console", Monaco, monospace;
+		font-size:x-small;
+			}
+	.bon {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    		border:2px solid #ccc; 
+        	border-radius: 5px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: relative;
+			left: 40%;
+			color: #ADD8E6;
+		  }
+#table {
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: x-small;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#table td, #table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#table tr:nth-child(even){background-color: #f2f2f2;}
+
+#table tr:hover {background-color: #ddd;}
+
+#table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}	
+
+.bon1  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 3%;
+			color: #ADD8E6;
+		  		}
+			.bon2  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 8%;
+			color: #ADD8E6;
+		  		}
+			.bon3  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 13%;
+			color: #ADD8E6;
+		  }
+
+	</style>
+</head>
+
+<body>
+<div  class="div1">
+		<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
+		<h4 align="center" style="color:white;"> Register Accident Details</h4>
+		<button class="bon1" onclick="home()">Log off</button> 	
+		<button class="bon2" onclick="charts()">Charts from CSV</button> 	
+		<button class="bon3" onclick="chartArry()">Charts from Array</button> 	
+</div>
+	<!-- <form  Use the sytle sheet "d1"
+				Login name is email address
+				Password should be atleast 5 character long
+				Call functions ValidateUserpwd and forgotPassword functions to validate the input
+	-->
+	<div class="d1" id="myForm">
+		<h3 class="p1">Enter Accident Details</h3> <br>
+		<label> Province: </label>
+			<Select name="driverProvince" required id="dProvince">
+				<option Selected= "selected">Leinster </option>
+				<option> Ulster </option>
+				<option> Munster </option>
+				<option> Connacht </option>
+			</Select> <br> <br>
+		<label> Vehicle Type : </label>
+			<Select name="vehicelType" required id="vType">
+				<option Selected= "selected">Car </option>
+				<option> Bike </option>
+				<option> Lorry </option>
+				<option> Bus </option>
+				<option> Others </option>
+			</Select> <br> <br>
+		<label> Driver Age : </label>
+			<Select name="driverAge" required id="dAge">
+				<option Selected= "selected">16 to 30 Years </option>
+				<option> 31 to 40 Years </option>
+				<option> 41 to 50 Years </option>
+				<option> 51 to 60 Years </option>
+				<option> Greater than 61 Years </option>
+			</Select> <br> <br>
+		<label> Driver Sex       : </label>
+			<Select name="driverSex" required id="dSex">
+				<option Selected= "selected">Male</option>
+				<option> Female</option>
+			</Select> <br> <br>
+		<label> Month and Year : </label> 
+		<input type="month" name="monthYear" id="mYear" min="2010-01" value="2019-05" required> 
+		<br> <br>
+		<button onclick="saveDts()" class="bon"> Save  </button>
+		<button onclick="clearDts()" class="bon"> Clear  </button>
+	</div>
+
+	<div id="myDiv-12"  class="div2">
+
+	<h3 class="p1">Accident Details in tabular format</h3> <br>
+
+	<table  id="table">
+		<tr align="centre">
+			<th>Province</th>
+			<th>Vehicle Type</th>
+			<th>Age</th>
+			<th>Sex</th>
+			<th >Month and Year</th>
+		</tr>
+	</table>
+</div>
+</body>
+
+
+
+<script>
+
+function home() {
+	location.replace("../login.htm");
+}
+function charts() {
+	window.location.href("../graph/graph.html")
+}
+function chartArry() {
+	window.location.href("../graph/graph-Array.html")
+}
+
+	// <!-- JavaScript to validate the user id and password -->
+
+	function save() {
+			var csvData = new Array();  // To collect the names
+			csvData[0] = document.getElementById('dProvince').value;
+            csvData[1] = document.getElementById('vType').value;
+            csvData[2] = document.getElementById('dAge').value;
+			csvData[3] = document.getElementById('dSex').value;
+			csvData[4] = document.getElementById('mYear').value;
+			
+				var table = document.getElementById("table");
+				var row = table.insertRow(1);
+				var province = row.insertCell(0);
+				var Type = row.insertCell(1);
+				var Age = row.insertCell(2);
+				var Sex = row.insertCell(3);
+				var	Year= row.insertCell(4);
+				province.innerHTML = csvData[0];
+				Type.innerHTML = csvData[1];
+				Age.innerHTML = csvData[2];
+				Sex.innerHTML = csvData[3];
+				Year.innerHTML = csvData[4];
+	}
+	
+	function saveDts() {
+           
+            // Collecting the names
+			if (table.rows.length !==  null ) {			
+				if (table.rows.length <11) {
+					 save()
+				}
+				else{
+					alert ("The table is full. Please clear the data to save the new information")
+				}
+			}
+
+	}
+	function clearDts() {
+		for(var i = table.rows.length - 1; i > 0; i--)
+			{
+				table. deleteRow(i);
+			}
+	}
+</script>
+</html>

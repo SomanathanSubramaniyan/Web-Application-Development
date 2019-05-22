@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<title> D3 - Reading from CSV file </title>
+
+<style>
+
+
+	.d1 {   float:left;
+			background-color: #1E90FF;
+			font-family: "Lucida Console", Monaco, monospace;
+			width:1200px;
+			height:100px;
+			border: 5px solid green;
+		}
+
+	.div3 { float:left;
+			background-color: #ADD8E6;
+			height:380px;
+			width:590px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+			}
+	.div2 { float:left;
+			background-color: white;
+			height:380px;
+			width:20px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;	
+			border: 5px solid green;			
+			}
+	.div1 { clear: left;
+			float:left;
+			background-color: #ADD8E6;
+			height:380px;
+			width:540px;
+			margin-top: 10px;
+			margin-bottom: 10px;
+			border-bottom: 1px dashed #ddd;
+			padding: 5px;
+			border: 5px solid green;
+			}
+	.p1	  {
+			width:600px;
+			margin:5px;
+			text-align: center;
+			color: rgb(14, 11, 236);
+			font-family: "Lucida Console", Monaco, monospace;
+
+			}
+	.bon  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    		border:2px solid #ccc; 
+        	border-radius: 5px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: relative;
+			left: 40%;
+			color: #ADD8E6;
+		  }
+
+		  .bon1  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 3%;
+			color: #ADD8E6;
+		  }
+			.bon2  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 8%;
+			color: #ADD8E6;
+		  }
+			.bon3  {
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			left: 2%;
+			top: 13%;
+			color: #ADD8E6;
+		  }
+	rect:hover {fill:black;}
+	.myClass 
+		{
+			border: 2px solid	black;
+			margin-top: 2px;
+		}
+	input {
+  		display: inline-block;
+		padding:5px; 
+    	border:2px solid #ccc; 
+        border-radius: 5px;
+		font-family: "Lucida Console", Monaco, monospace;
+		}
+	label{
+    display: inline-block;
+    width: 400px;
+    text-align: right;
+	text-anchor: middle;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: small;
+	}
+
+	
+</style>
+
+</head>
+
+<body>
+		<div class="d1" >
+			<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
+			<h4 align="center" style="color:white;"> Generate chart from CSV file</h4>
+			<button class="bon1" onclick="home()">Log off</button> 	
+			<button class="bon2" onclick="charts()">Charts from Array</button> 	
+			<button class="bon3" onclick="accidents()">Register Accidents</button> 	
+		</div> 
+
+		<div id="myDiv-l1"  class="div1" >   
+			<h5 class="p1"> "County Vs Number of Accidents" Bar chart </h5> <br>
+			<h6 class="p1"> Enter the parameters: </h6> <br>
+			<label> Enter Chart Height (pixels) : </label>
+			<input type="number" id="gheight" min="100" max="500" value = "300" size="3"/> <br><br>
+			<label> Enter Chart  Width (pixels) : </label>
+			<input type="number" id="gwidth" min="100" max="500" value = "350" size="3"  /> <br><br>
+			<label> Select Chart color (accidents < 70) : </label>
+			<input type="color" id="clrPicker1"/> <br> <br>
+			<label> Select Chart color (accidents < 150) : </label>
+			<input type="color" id="clrPicker2"/> <br> <br>
+			<label> Select Chart color (accidents >150) : </label>
+			<input type="color" id="clrPicker3"/> <br> <br>
+			<button onclick="mainCheck()" class="bon" align="center"> Submit </button> 
+		</div>
+		<div id="myDiv-12"  class="div2">  </div>
+		<div id="myDiv-l3"  class="div3"> 
+		</div>
+
+</body>
+
+<script>
+function home() {
+	location.replace("../login.htm");
+}
+function charts() {
+	window.location.href("graph-array.html")
+}
+function accidents() {
+	window.location.href("../accidents/accidents.htm")
+}
+function mainCheck()
+	{
+		if( ((document.getElementById("gheight").value >= 100 ) && (document.getElementById("gheight").value <=300)) && ((document.getElementById("gwidth").value >= 300 ) && (document.getElementById("gwidth").value <= 450)) )
+			{
+			graph()
+			}
+		else
+			{
+			alert("Enter valid height [100 to 300] and width[300 to 450]");
+			}
+	}
+
+
+function graph() 
+	{
+
+		d3.csv("Accidents.csv").then 
+			(function(data)
+				{
+					console.log(data);
+				
+		// Convert into Numbers
+					data.forEach(function(d) {
+						d.Accidents = Number(d.Accidents);
+						});
+		
+		// Get the height and width of the elements from the input parameters
+			var height = document.getElementById("gheight").value;
+			var dataCount = data.length;
+			var width = document.getElementById("gwidth").value;
+			var color1 = document.getElementById("clrPicker1").value;
+			var color2 = document.getElementById("clrPicker2").value;
+			var color3 = document.getElementById("clrPicker3").value;
+		
+				
+		// Create a Scale		
+					let myScale =  d3.scaleLinear()
+								.domain([0,d3.max(data, function(d) {
+												return d.Accidents;
+														})
+														])
+								.range([height,0]);
+							
+		// Create a XScale		
+					let XScale = d3.scaleBand()
+								.domain(data.map(function (d) { return d.County;}))
+								.range([0,width]);
+		// Create y Axis
+					var yaxis = d3.axisLeft()
+						.scale(myScale);
+					
+		// Create x Axis
+					var xaxis = d3.axisBottom()
+						.scale(XScale);
+					
+					d3.select("#myDiv-l3").selectAll("*").remove();
+					var svgContainer = d3.select("#myDiv-l3").append("svg")
+							.attr("width",500)
+							.attr("height",380)
+							.attr("align","center")
+					// <!--		.attr("class","myClass"); -->
+									
+					var svgRectangle = svgContainer.selectAll("rect").data(data);
+						 svgRectangle.enter()
+							.append("rect")
+							.transition()
+							.duration(3000)
+							.delay(1000)
+							//.ease(d3.easeBounce)
+							//.ease(d3.easeCircleIn)
+							.ease(d3.easeElastic)
+							.attr("x",function(d,i) {return 50+(i*width/dataCount);})
+							.attr("y",function(d){return (myScale(d.Accidents));})
+							.attr("width",40)
+							.attr("height",function(d) {return height-myScale(d.Accidents);})
+							.attr("fill", function (d) {
+									if (d.Accidents <70) {return color1;}
+									else if (d.Accidents <=150) {return color2;}
+									else if (d.Accidents >150) {return color3;}
+									else {return "green";}
+									});
+						
+					svgContainer.append("g")
+						.attr("transform","translate(45,0)")
+						.call(yaxis);
+					
+					svgContainer.append("g")
+						.attr("transform","translate(50,"+height+")")
+						.call(xaxis)
+						.selectAll("text")
+							.attr("transform","rotate(60)")
+							.attr("text-anchor","start")
+							.attr("x",16)
+							.attr("y",1)
+							;
+
+				}
+			);
+	}
+</script>
+
+</html>
