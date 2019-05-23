@@ -3,11 +3,16 @@
 
 <head>
 <script src="https://d3js.org/d3.v5.min.js"></script>
-<title> D3 - Reading from CSV file </title>
+<title> Charts from an Array </title>
 <!-- Author Somu 
-Display Bar and Circle charts based on the information keyed into the -->
+Display Bar and Circle charts based on the information keyed into the parameter section of the screen
+Consistent style sheet is used across the screens.
+-->
 <style>
 
+/* 4 divs. Consistent color, padding,margin, border, width , height and font set using CSS style sheets 
+float property is used to position the screens
+*/
 
 	.d1 {   float:left;
 			background-color: #1E90FF;
@@ -48,14 +53,19 @@ Display Bar and Circle charts based on the information keyed into the -->
 			padding: 5px;
 			border: 5px solid green;
 			}
+
+/* style sheet attribute for the  headings */
+
 	.p1	  {
 			width:600px;
 			margin:5px;
 			text-align: center;
 			color: rgb(14, 11, 236);
 			font-family: "Lucida Console", Monaco, monospace;
-
 			}
+
+/* style sheet parameter for the buttons. The information is repeated  with slight variation for the % positioning */
+
 	.bon  {
 			background-color: rgb(30, 117, 4);
 			display: inline-block;
@@ -66,7 +76,8 @@ Display Bar and Circle charts based on the information keyed into the -->
 			position: relative;
 			left: 40%;
 			color: #ADD8E6;
-		  }
+			cursor:pointer;
+		}
 
 		  .bon1  {
 			background-color: rgb(30, 117, 4);
@@ -79,6 +90,7 @@ Display Bar and Circle charts based on the information keyed into the -->
 			left: 2%;
 			top: 3%;
 			color: #ADD8E6;
+			cursor:pointer;
 		  		}
 			.bon2  {
 			background-color: rgb(30, 117, 4);
@@ -91,6 +103,7 @@ Display Bar and Circle charts based on the information keyed into the -->
 			left: 2%;
 			top: 8%;
 			color: #ADD8E6;
+			cursor:pointer;
 		  		}
 			.bon3  {
 			background-color: rgb(30, 117, 4);
@@ -104,12 +117,14 @@ Display Bar and Circle charts based on the information keyed into the -->
 			top: 13%;
 			color: #ADD8E6;
 		  }
+
+	/* Display black colour while hovering over a rectangle
+*/
 	rect:hover {fill:black;}
-	.myClass 
-		{
-			border: 2px solid	black;
-			margin-top: 2px;
-		}
+	btn:hover {fill:red;}
+
+/* Input text box style
+*/
 	input {
   		display: inline-block;
 		padding:4px; 
@@ -117,6 +132,8 @@ Display Bar and Circle charts based on the information keyed into the -->
         border-radius: 4px;
 		font-family: "Lucida Console", Monaco, monospace;
 		}
+/* Lable style for the text box
+*/
 	label{
     display: inline-block;
     width: 400px;
@@ -133,9 +150,10 @@ Display Bar and Circle charts based on the information keyed into the -->
 
 <body>
 		<div class="d1" >
+				<!-- Top div containing screen heading and the 3 re direction buttons -->
 			<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
 			<h4 align="center" style="color:white;"> Bar and Circle Charts from an Array</h4>
-			<button class="bon1" onclick="home()">Log off</button> 	
+			<button class="bon1" onclick="home()"><img src="../images/logout.png" alt="Home Button" hover="Home" width="25" height="10">Log off</button> 	
 			<button class="bon2" onclick="charts()">Charts from CSV</button> 	
 			<button class="bon3" onclick="accidents()">Register Accidents</button> 		
 		</div> 
@@ -144,15 +162,15 @@ Display Bar and Circle charts based on the information keyed into the -->
             <h5 class="p1"> Enter the parameters for the chart</h5> <br>
           
 			<label> Enter Chart Height (pixels) : </label>
-			<input type="number" id="gheight" min="100" max="500" value = "300" size="3"/> <br>
+			<input type="number" id="gheight" min="100" max="500" value = "350" size="3"/> <br>
 			<label> Enter Chart  Width (pixels) : </label>
-			<input type="number" id="gwidth" min="100" max="600" value = "400" size="3"  /> <br>
+			<input type="number" id="gwidth" min="100" max="600" value = "500" size="3"  /> <br>
 			<label> Select Chart color (accidents < 70) : </label>
-			<input type="color" id="clrPicker1"/> <br> 
-			<label> Select Chart color (accidents < 150) : </label>
-			<input type="color" id="clrPicker2"/> <br> 
+			<input type="color" id="clrPicker1" value="#4B0082"/> <br> 
+			<label> Select Chart color (accidents > 70 & < 150) : </label>
+			<input type="color" id="clrPicker2" value="#FF8C00"/> <br> 
 			<label> Select Chart color (accidents >150) : </label>
-            <input type="color" id="clrPicker3"/> <br> 
+            <input type="color" id="clrPicker3" value="#800000"/> <br> 
 			<label>Number of Accidents during Winter: </label>
             <input type="number" id="aWinter" min="50" max="200" size="3" value="20" /> <br>
             <label>Number of Accidents during Spring: </label>
@@ -171,19 +189,26 @@ Display Bar and Circle charts based on the information keyed into the -->
 </body>
 
 <script>
+
+// Function to return the control back to login screen
 function home() {
 	location.replace("../login.htm");
 }
+
+// function to return the control to the page (charts from Array)
 function charts() {
 	window.location.href("graph.html")
 }
+
+// function to return the control to the page (Accidents Registry screen)
 function accidents() {
 	window.location.href("../accidents/accidents.htm")
 }
 
+// Check the function height and width parameters
 function mainCheck()
 	{
-		if( ((document.getElementById("gheight").value >= 50 ) && (document.getElementById("gheight").value <=400)) && ((document.getElementById("gwidth").value >= 400 ) && (document.getElementById("gwidth").value <= 600)) )
+		if( ((document.getElementById("gheight").value >= 350 ) && (document.getElementById("gheight").value <=400)) && ((document.getElementById("gwidth").value >= 400 ) && (document.getElementById("gwidth").value <= 600)) )
 			{
                 var Spring = document.getElementById("aSpring").value;
                 var Winter = document.getElementById("aWinter").value;
@@ -204,13 +229,14 @@ function mainCheck()
             }
 		else
 			{
-			alert("Enter valid height [50 to 400] and width [400 to 600]");
+			alert("Enter valid height [350 to 400] and width [400 to 600]");
 			}
 	}
 
+// Check the height, width and the season parameters
     function CmainCheck()
 	{
-		if( ((document.getElementById("gheight").value >= 50 ) && (document.getElementById("gheight").value <=400)) && ((document.getElementById("gwidth").value >= 500 ) && (document.getElementById("gwidth").value <= 600)) )
+		if( ((document.getElementById("gheight").value >= 350 ) && (document.getElementById("gheight").value <=400)) && ((document.getElementById("gwidth").value >= 400 ) && (document.getElementById("gwidth").value <= 600)) )
 			{
                 var Spring = document.getElementById("aSpring").value;
                 var Winter = document.getElementById("aWinter").value;
@@ -231,7 +257,7 @@ function mainCheck()
             }
 		else
 			{
-				alert("Enter valid height [50 to 400] and width [500 to 600]");
+				alert("Enter valid height [350 to 400] and width [500 to 600]");
 			}
 	}
 
@@ -253,25 +279,23 @@ function graph()
             var Summer = document.getElementById("aSummer").value;
             var Autumn = document.getElementById("aAutumn").value;
 
+	// Set the parameters for the x scale. This corresponds to the input received from the user in the screen
             var myArray = [Spring,Winter,Summer,Autumn]
 			var myArrayname = ["Spring","Winter","Summer","Autumn"]
 
+	// Remove/clear the existing graphs if any
+			
 			d3.select("#myDiv-l3").selectAll("*").remove();
 
-		// Create a XScale		
-					let XScale = d3.scaleBand()
-								.domain(myArrayname.map(function (d) { return d;}))
-								.range([0,width]);
-				
-		// Create x Axis
-					var xaxis = d3.axisBottom()
-						.scale(XScale);
+	// Create the SVG container inside the div
 			
             var svgContainer = d3.select("#myDiv-l3").append("svg")
 					.attr("width",width)
-					.attr("height",height)
+					.attr("height",height+10)
 					.attr("align","center")
-												
+
+	// Add rectangle to container	
+	//fill color change based on the number of accidents									
 			var myRectangle = svgContainer.selectAll("rect").data(myArray);
 
 					myRectangle.enter()
@@ -279,8 +303,7 @@ function graph()
 							.transition()
 							.duration(3000)
 							.delay(1000)
-							//.ease(d3.easeBounce)
-							//.ease(d3.easeCircleIn)
+							.ease(d3.easeBounce)
 							.ease(d3.easeElastic)
 							.attr("x",function(d,i) {return 50+(i*100);})
 							.attr("y",function (d) {return (height-d);})
@@ -292,8 +315,22 @@ function graph()
 									else if (d >150) {return color3;}
 									else {return "green";}
 									});
-												
+
+			// Lable to display the number of accidents and the season		
+			//text color change based on the number of accidents										
 			var myLabel = svgContainer.selectAll("text").data(myArray);
+						var myLabel1 = svgContainer.selectAll("text").data(myArrayname);
+
+					myLabel1.enter()
+							.append("text")
+							.attr("x",function(d,i) {return 70 +(i*100);})
+							.attr("y",390)
+                            .attr("text-anchor","middle")
+                            .attr("font-family", "Lucida Console")
+                            .attr("font-Size","15px")
+                            .attr("fill","black")
+							.text(function(d) {return (d);}) ;
+
 
 					myLabel.enter()
 							.append("text")
@@ -309,8 +346,12 @@ function graph()
                             .text(function(d) {return (d);}) ;
 
 	}
+
+
     // Cricle Chart/Graph from an Array
-    function circlegraph() 
+    
+	
+	function circlegraph() 
 	{
 
     	// Get the height and width of the elements from the input parameters
@@ -325,20 +366,34 @@ function graph()
             var Summer = document.getElementById("aSummer").value;
             var Autumn = document.getElementById("aAutumn").value;
 
+		// Set the parameters for the x scale. This corresponds to the input received from the user in the screen
+
             var myArray = [Spring,Winter,Summer,Autumn]
+			var myArrayname = ["Spring","Winter","Summer","Autumn"]
+
+		// Clear any exisitng graphs
 
 			d3.select("#myDiv-l3").selectAll("*").remove();
-			
+		
+		// Define the SVG container
             var svgContainer = d3.select("#myDiv-l3").append("svg")
 					.attr("width",width)
 					.attr("height",height)
 					.attr("align","center")
-            
+		
+        // Add Circle    
             let svgCircle = svgContainer.selectAll("circle")
 					.data(myArray);
 
+		//Define the circule attributes. Reduce the radius size by 4x so that it can be fit within the div
+		//fill color change based on the number of accidents
+
             svgCircle.enter()
 		        .append("circle")
+				.transition()
+				.duration(2000)
+				.delay(500)
+				.ease(d3.easeCircleIn)
 		        .attr("cx", function(d, i){return 60 + (i*120);})
 		        .attr("cy",180)
 		        .attr("r",function(d){return d/4;})
@@ -349,7 +404,19 @@ function graph()
 									else {return "green";}
 									});
             
+		// Lable to display the number of accidents and the season
 			var myLabel = svgContainer.selectAll("text").data(myArray);
+			var myLabel1 = svgContainer.selectAll("text").data(myArrayname);
+
+					myLabel1.enter()
+							.append("text")
+							.attr("x",function(d,i) {return 60 + (i*120);})
+							.attr("y",300)
+                            .attr("text-anchor","middle")
+                            .attr("font-family", "Lucida Console")
+                            .attr("font-Size","15px")
+                            .attr("fill","black")
+							.text(function(d) {return (d);}) ;
 
 					myLabel.enter()
 							.append("text")
@@ -360,47 +427,10 @@ function graph()
 							.attr("y",160)
                             .attr("text-anchor","middle")
                             .attr("font-family", "Lucida Console")
-                            .attr("font-Size","20px")
+                            .attr("font-Size","26px")
                             .attr("fill","red")
                             .text(function(d) {return (d);}) ;
 
-
-												
-			// var myRectangle = svgContainer.selectAll("rect").data(myArray);
-
-			// 		myRectangle.enter()
-			// 				.append("rect")
-			// 				.transition()
-			// 				.duration(3000)
-			// 				.delay(1000)
-			// 				//.ease(d3.easeBounce)
-			// 				//.ease(d3.easeCircleIn)
-			// 				.ease(d3.easeElastic)
-			// 				.attr("x",function(d,i) {return 50+(i*100);})
-			// 				.attr("y",function (d) {return (height-d);})
-			// 				.attr("width",50)
-			// 				.attr("height",function(d) {return (d);})
-			// 				.attr("fill", function (d) {
-			// 						if (d <70) {return color1;}
-			// 						else if (d <=150) {return color2;}
-			// 						else if (d >150) {return color3;}
-			// 						else {return "green";}
-			// 						});
-												
-			// var myLabel = svgContainer.selectAll("text").data(myArray);
-
-			// 		myLabel.enter()
-			// 				.append("text")
-            //                 .transition()
-			// 				.duration(3000)
-			// 				.delay(1000)
-			// 				.attr("x",function(d,i) {return 70 +(i*100);})
-			// 				.attr("y",function (d) {return (height-(d-15));})
-            //                 .attr("text-anchor","middle")
-            //                 .attr("font-family", "Lucida Console")
-            //                 .attr("font-Size","20px")
-            //                 .attr("fill","white")
-            //                 .text(function(d) {return (d);}) ;
 
 	}
 </script>

@@ -6,11 +6,12 @@
 
 <head>
 	<!-- Style Setting and relative positioning of the User Name and Password input boxes 
-	     Keep the Screen name as "Login Screen"
-		 Create a CSS class and set the style of the website
+	     Screen name - "Login Screen"
+		 Create a CSS sytle sheet to use consistent design across the board
 	-->
 	<title> Login Screen </title>
 	<style>
+	/* 2 divs. Consistent color, padding,margin, border, width , height and font set using CSS style sheets */
 	.d1 {   float:left;
 			background-color: #1E90FF;
 			padding: 20px;
@@ -27,42 +28,42 @@
 			padding: 20px;
 			font-family: "Lucida Console", Monaco, monospace;
 			width:1200px;
-			height:100px;
+			height:90px;
 			margin-top: 10px;
 			margin-bottom: 10px;
 			border: 5px solid green;
 		}
-
+/* Button styling using consistent font,margin and colour across the application */
 	.btn {
-			background-color: orange; 
-			border: none; 
-			color: white; 
-			padding: 12px 16px; 
-			font-size: 16px; 
-			cursor: pointer; 
+			background-color: rgb(30, 117, 4);
+			display: inline-block;
+			padding:5px; 
+    		border:2px solid #ccc; 
+      		border-radius: 5px;
+    		font-family: "Lucida Console", Monaco, monospace;
+			position: absolute;
+			top: 13%;
+			color: #ADD8E6;
 		}
+/* Paragraph styling using consistent font and colour across the application */
+	.p  {
+			text-align: left;
+			color: white;
+			font-family: "Lucida Console", Monaco, monospace;
+			font-size: medium;
 
-
+			}
+/* Style for the mouse hovering over button. There are 2 buttons in this page namely Submit and forgot password  */
 	.btn:hover {
-			background-color: RoyalBlue;
+			background-color: rgb(13, 134, 59);
 		} 
 	</style>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- Add icon library -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-
-
-
+	<!-- Display the heading -->
 	<div class="d1" >
-
 		<h1 align="center" style="color:white;"> Ireland - Road Accidents Register</h1>
-		<button class="btn" style="position: absolute; left: 30px;"><i class="fa fa-home"></i> Home</button> 	
-		<button class="btn" align="center"><i class="fa fa-bars"></i> Menu</button> 	
-		<button class="btn" style="position: absolute; right: 30px;"><i class="fa fa-close"></i> Close</button>
 	</div> 
 
 	<!-- <form  Use the sytle sheet "d1"
@@ -77,48 +78,67 @@
 			Password  :
 			<input type="password" placeholder="Enter Password" id="pWord" minlength="5"/>  <br> <br>
 		
-			<button type="button" onclick ="validateUserpwd()"> Submit </button>
+			<button type="button" onclick ="validate()"> Submit </button>
 			<button type="button" onclick="forgotPassword()"> Forgot Password </button>
 		</form>
 
+<!-- Display the allowed functions in this website-->
 
-	<div class="d1">
-		<h5 style="position: absolute; left: 30px; text-color:white;" > 
-			Designed By : Somanathan Subramaniyan, GMIT <br>
-			Student Id  : G00364742
-		</h5> 
+	<div class="d1" style="height:150px;">
+		<p class="p"> This website provides below functionalities for the user
+			<li style="color:white; text-indent: 20px;">Register Accident Details</li>
+			<li style="color:white; text-indent: 20px;">Charts from Array   - Season Vs Number of Accidents</li>
+			<li style="color:white; text-indent: 20px;">Chart from CSV file - County Vs Number of Accidents</li>
+		</p>
+		<p class="p"> Key information is taken from the RSA website. Source: <a href="http://www.rsa.ie" target="_blank" style="color:red"> Road Safty Authority </a> </p>
+		
 	</div>
 	
 </body>
 <script>
 
-	<!-- JavaScript to validate the user id and password -->
+/* This validates the password and ensure the user is not null */
 
-function validateUserpwd() {
+function validateUserpwd() 
+{
 		if((document.getElementById("uName").value != "") && (document.getElementById("pWord").value =="guest"))
 			{
-				alert("The entered User name and Password credentials are valid");
-				location.replace( "graph/graph.html")
+			alert("The entered User name and Password credentials are valid");
+			location.replace( "graph/graph.html")
 			}
 		else 
 			{
-				alert("Enter valid User name and Password");
+			alert("Enter valid User name and Password");
 			}
 }	
 
-<!-- JavaScript to show the default password-->
+/* The function (forgot password) show the temporary password for the user to login*/
 
-function forgotPassword() {
+function forgotPassword() 
+{
 		if((document.getElementById("pWord").value != "") && (document.getElementById("pWord").value !="guest"))
 			{
-				alert("Enter the correct password. The temporary password is 'guest' ");
+			alert("Enter the correct password. The temporary password is 'guest' ");
 			}
 		else 
 			{
-				alert("The temporary password is 'guest' ");
+			alert("The user name is any valid email and the temporary password is 'guest' ");
 			}
 }	
 
+/* This function validates the email id. If valid, call the function to check the password*/
+
+function validate()
+{
+		if (!document.getElementById("uName").checkValidity())
+			{
+			alert("Enter valid email");
+			}
+		else
+			{
+			validateUserpwd() ;
+			}
+}
 
 
 

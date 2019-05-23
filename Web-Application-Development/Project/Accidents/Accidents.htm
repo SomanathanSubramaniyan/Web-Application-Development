@@ -11,7 +11,10 @@
 	-->
 	<title> Accident Details Screen</title>
 	<style>
-	
+
+/* 3 divs. Consistent color, padding,margin, border, width , height and font set using CSS style sheets 
+float property is used to position the screens */
+
 	.div1 { float:left;
 			background-color: #1E90FF;
 			font-family: "Lucida Console", Monaco, monospace;
@@ -40,6 +43,9 @@
 			padding: 5px;	
 			border: 5px solid green;			
 			}
+
+/* style sheet attribute for the  headings */
+
 	.p1	  {
 			width:600px;
 			margin:5px;
@@ -51,11 +57,11 @@
 
 	input {
   		display: inline-block;
-		padding:4px; 
+			padding:4px; 
     	border:2px solid #ccc; 
-        border-radius: 4px;
-		height: 20px;
-		font-family: "Lucida Console", Monaco, monospace;
+      border-radius: 4px;
+			height: 20px;
+			font-family: "Lucida Console", Monaco, monospace;
 		}
 	select {
 		display: inline-block;
@@ -74,33 +80,37 @@
 		font-family: "Lucida Console", Monaco, monospace;
 		font-size:x-small;
 			}
+
+/* style sheet parameter for the buttons. The information is repeated  with slight variation for the % positioning */
+
 	.bon {
 			background-color: rgb(30, 117, 4);
 			display: inline-block;
 			padding:5px; 
-    		border:2px solid #ccc; 
-        	border-radius: 5px;
-    		font-family: "Lucida Console", Monaco, monospace;
+      border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
 			position: relative;
 			left: 40%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  }
+
+/* style sheet parameter for the table. collapse border style */
+/* table border style, row style */
+/* table row hover attributes and style */
 #table {
   font-family: "Lucida Console", Monaco, monospace;
   font-size: x-small;
   border-collapse: collapse;
   width: 100%;
 }
-
 #table td, #table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
-
 #table tr:nth-child(even){background-color: #f2f2f2;}
-
 #table tr:hover {background-color: #ddd;}
-
 #table th {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -108,6 +118,8 @@
   background-color: #4CAF50;
   color: white;
 }	
+
+/* style sheet parameter for the buttons. The information is repeated  with slight variation for the % positioning */
 
 .bon1  {
 			background-color: rgb(30, 117, 4);
@@ -120,6 +132,7 @@
 			left: 2%;
 			top: 3%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  		}
 			.bon2  {
 			background-color: rgb(30, 117, 4);
@@ -132,6 +145,7 @@
 			left: 2%;
 			top: 8%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  		}
 			.bon3  {
 			background-color: rgb(30, 117, 4);
@@ -144,6 +158,7 @@
 			left: 2%;
 			top: 13%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  }
 
 	</style>
@@ -151,16 +166,15 @@
 
 <body>
 <div  class="div1">
+		<!-- Top div containing screen heading and the 3 re direction buttons -->
 		<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
 		<h4 align="center" style="color:white;"> Register Accident Details</h4>
-		<button class="bon1" onclick="home()">Log off</button> 	
+		<button class="bon1" onclick="home()"><img src="../images/logout.png" alt="Home Button" hover="Home" width="25" height="10">Log off</button> 	
 		<button class="bon2" onclick="charts()">Charts from CSV</button> 	
 		<button class="bon3" onclick="chartArry()">Charts from Array</button> 	
 </div>
 	<!-- <form  Use the sytle sheet "d1"
-				Login name is email address
-				Password should be atleast 5 character long
-				Call functions ValidateUserpwd and forgotPassword functions to validate the input
+				Capture province, Vechicle type, Driver age , Month-year and Driver Sex
 	-->
 	<div class="d1" id="myForm">
 		<h3 class="p1">Enter Accident Details</h3> <br>
@@ -199,6 +213,7 @@
 		<button onclick="clearDts()" class="bon"> Clear  </button>
 	</div>
 
+	<!-- 2nd Div. this displays the div heading and the html table construct -->
 	<div id="myDiv-12"  class="div2">
 
 	<h3 class="p1">Accident Details in tabular format</h3> <br>
@@ -218,18 +233,21 @@
 
 
 <script>
-
+// Function to return the control back to login screen
 function home() {
 	location.replace("../login.htm");
 }
+// function to return the control to the page (charts from CSV)
 function charts() {
 	window.location.href("../graph/graph.html")
 }
+
+// function to return the control to the page (charts from Array)
 function chartArry() {
 	window.location.href("../graph/graph-Array.html")
 }
 
-	// <!-- JavaScript to validate the user id and password -->
+// Save the details in the html table -->
 
 	function save() {
 			var csvData = new Array();  // To collect the names
@@ -252,10 +270,10 @@ function chartArry() {
 				Sex.innerHTML = csvData[3];
 				Year.innerHTML = csvData[4];
 	}
+
+	// Ensure there are rows in the table before saving the record and also, warn if the table row exceeds 10
 	
 	function saveDts() {
-           
-            // Collecting the names
 			if (table.rows.length !==  null ) {			
 				if (table.rows.length <11) {
 					 save()

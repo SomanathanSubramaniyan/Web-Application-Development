@@ -4,10 +4,15 @@
 <head>
 <script src="https://d3js.org/d3.v5.min.js"></script>
 <title> D3 - Reading from CSV file </title>
+<!-- Author Somu 
+Display Bar and Circle charts based on the information keyed into the parameter section of the screen
+Consistent style sheet is used across the screens. -->
 
 <style>
 
-
+/* 4 divs. Consistent color, padding,margin, border, width , height and font set using CSS style sheets 
+float property is used to position the screens
+*/
 	.d1 {   float:left;
 			background-color: #1E90FF;
 			font-family: "Lucida Console", Monaco, monospace;
@@ -47,6 +52,8 @@
 			padding: 5px;
 			border: 5px solid green;
 			}
+	/* style sheet attributes for the Parameter heading in the various divs
+*/
 	.p1	  {
 			width:600px;
 			margin:5px;
@@ -55,16 +62,19 @@
 			font-family: "Lucida Console", Monaco, monospace;
 
 			}
+	/* Sytel sheet attribute/parameter settings for the buttons. The information is repeated  with slight variation for the % positioning
+*/
 	.bon  {
 			background-color: rgb(30, 117, 4);
 			display: inline-block;
 			padding:5px; 
-    		border:2px solid #ccc; 
-        	border-radius: 5px;
-    		font-family: "Lucida Console", Monaco, monospace;
+    	border:2px solid #ccc; 
+      border-radius: 5px;
+    	font-family: "Lucida Console", Monaco, monospace;
 			position: relative;
 			left: 40%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  }
 
 		  .bon1  {
@@ -78,6 +88,7 @@
 			left: 2%;
 			top: 3%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  }
 			.bon2  {
 			background-color: rgb(30, 117, 4);
@@ -90,6 +101,7 @@
 			left: 2%;
 			top: 8%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  }
 			.bon3  {
 			background-color: rgb(30, 117, 4);
@@ -102,27 +114,30 @@
 			left: 2%;
 			top: 13%;
 			color: #ADD8E6;
+			cursor: pointer;
 		  }
-	rect:hover {fill:black;}
+	rect:hover {fill:rgba(25, 125, 150, 0.568);}
 	.myClass 
 		{
 			border: 2px solid	black;
 			margin-top: 2px;
 		}
+	/* Input text box style settings*/
 	input {
   		display: inline-block;
-		padding:5px; 
+			padding:5px; 
     	border:2px solid #ccc; 
-        border-radius: 5px;
-		font-family: "Lucida Console", Monaco, monospace;
+      border-radius: 5px;
+			font-family: "Lucida Console", Monaco, monospace;
 		}
+	/* Label style settings */
 	label{
     display: inline-block;
     width: 400px;
     text-align: right;
-	text-anchor: middle;
-	font-family: "Lucida Console", Monaco, monospace;
-	font-size: small;
+		text-anchor: middle;
+		font-family: "Lucida Console", Monaco, monospace;
+		font-size: small;
 	}
 
 	
@@ -131,14 +146,16 @@
 </head>
 
 <body>
+		<!-- Top div containing screen heading and the 3 re direction buttons -->
 		<div class="d1" >
 			<h3 align="center" style="color:white; "> Ireland - Road Accidents Register</h3>
 			<h4 align="center" style="color:white;"> Generate chart from CSV file</h4>
-			<button class="bon1" onclick="home()">Log off</button> 	
+			<button class="bon1" onclick="home()"><img src="../images/logout.png" alt="Home Button" hover="Home" width="25" height="10">Log off</button> 		
 			<button class="bon2" onclick="charts()">Charts from Array</button> 	
 			<button class="bon3" onclick="accidents()">Register Accidents</button> 	
 		</div> 
 
+	<!-- capture the height, width and the accident details for each season -->
 		<div id="myDiv-l1"  class="div1" >   
 			<h5 class="p1"> "County Vs Number of Accidents" Bar chart </h5> <br>
 			<h6 class="p1"> Enter the parameters: </h6> <br>
@@ -147,11 +164,11 @@
 			<label> Enter Chart  Width (pixels) : </label>
 			<input type="number" id="gwidth" min="100" max="500" value = "350" size="3"  /> <br><br>
 			<label> Select Chart color (accidents < 70) : </label>
-			<input type="color" id="clrPicker1"/> <br> <br>
+			<input type="color" id="clrPicker1" value="#4B0082"/> <br> <br>
 			<label> Select Chart color (accidents < 150) : </label>
-			<input type="color" id="clrPicker2"/> <br> <br>
+			<input type="color" id="clrPicker2" value="#FF8C00"/> <br> <br>
 			<label> Select Chart color (accidents >150) : </label>
-			<input type="color" id="clrPicker3"/> <br> <br>
+			<input type="color" id="clrPicker3" value="#800000"/> <br> <br>
 			<button onclick="mainCheck()" class="bon" align="center"> Submit </button> 
 		</div>
 		<div id="myDiv-12"  class="div2">  </div>
@@ -161,15 +178,23 @@
 </body>
 
 <script>
+// Function to return the control back to login screen
 function home() {
 	location.replace("../login.htm");
 }
+
+// function to return the control to the page (charts from array)
 function charts() {
 	window.location.href("graph-array.html")
 }
+
+// function to the accidents register page
 function accidents() {
 	window.location.href("../accidents/accidents.htm")
 }
+
+// Validate the input values
+
 function mainCheck()
 	{
 		if( ((document.getElementById("gheight").value >= 100 ) && (document.getElementById("gheight").value <=300)) && ((document.getElementById("gwidth").value >= 300 ) && (document.getElementById("gwidth").value <= 450)) )
@@ -182,7 +207,7 @@ function mainCheck()
 			}
 	}
 
-
+// function to plot the graph from the csv file
 function graph() 
 	{
 
@@ -225,21 +250,24 @@ function graph()
 					var xaxis = d3.axisBottom()
 						.scale(XScale);
 					
+		// Clear the existing charts and graphs
 					d3.select("#myDiv-l3").selectAll("*").remove();
+
+		// Create the SVG container within the div
 					var svgContainer = d3.select("#myDiv-l3").append("svg")
 							.attr("width",500)
 							.attr("height",380)
 							.attr("align","center")
-					// <!--		.attr("class","myClass"); -->
-									
+
+		// Add rectangle
+		// Change fill colour based on number of accidents
+		// Add animation and appropriate delay
 					var svgRectangle = svgContainer.selectAll("rect").data(data);
 						 svgRectangle.enter()
 							.append("rect")
 							.transition()
 							.duration(3000)
 							.delay(1000)
-							//.ease(d3.easeBounce)
-							//.ease(d3.easeCircleIn)
 							.ease(d3.easeElastic)
 							.attr("x",function(d,i) {return 50+(i*width/dataCount);})
 							.attr("y",function(d){return (myScale(d.Accidents));})
@@ -251,6 +279,8 @@ function graph()
 									else if (d.Accidents >150) {return color3;}
 									else {return "green";}
 									});
+
+				// Add the X and y axes
 						
 					svgContainer.append("g")
 						.attr("transform","translate(45,0)")
